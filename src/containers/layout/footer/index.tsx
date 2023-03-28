@@ -4,7 +4,7 @@ const Footer = () => {
     // const [state, setState] = useState()
     return (
         <div>
-            Footer
+            <p></p>
         </div>
     )
 }
