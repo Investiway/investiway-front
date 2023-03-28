@@ -1,6 +1,7 @@
 
-# Investiway
-
+![img.png](./public/LOGO.png)
+# @Investiway
+##### Personal finance management.
 ## Description
 
 **Investiway** is a web application that allows users to keep track of their monthly and weekly expenses, plan their spending for the next month, add new spending categories, and set monthly recurring expenses. The application also provides advice for spending based on user history and allows users to create notes with priorities.
