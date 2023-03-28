@@ -29,7 +29,7 @@
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development react-scripts start",
-    "build": "postcss react-scripts build",
+    "build": "cross-env NODE_ENV=production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
