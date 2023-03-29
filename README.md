@@ -1,5 +1,5 @@
 
-![img.png](./public/LOGO.png)
+![img.png](./public/LOGO_Banner.png)
 # @Investiway
 ##### Personal finance management.
 ## Description

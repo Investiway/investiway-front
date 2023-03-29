@@ -6,7 +6,7 @@ const Main = () => {
     // const [state, setState] = useState()
     return (
         <div>
-            <Home name="" age={2} />
+            <Home />
         </div>
     )
 }

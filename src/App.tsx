@@ -1,4 +1,5 @@
 import React from 'react';
+
 //region [Import styles]
 import './tailwind.css'
 import './index.css'
@@ -11,17 +12,21 @@ import { Provider } from 'react-redux'
 import Main from './containers/layout/main'
 import Header from "./containers/layout/header";
 import Footer from "./containers/layout/footer";
+import AsideMenu from "./containers/layout/asideMenu";
 function App() {
   return (
     <ThemeProvider theme={theme}>
         <CssBaseline />
-        <div className="App">
-            <Header />
-            <Provider store={stores}>
-                <Main />
-            </Provider>
-            <Footer />
-        </div>
+        <Provider store={stores}>
+            <div className="App tw-grid tw-grid-cols-[250px,1fr]">
+                <AsideMenu/>
+                <div>
+                    <Header />
+                        <Main />
+                    <Footer />
+                </div>
+            </div>
+        </Provider>
     </ThemeProvider>
   );
 }
