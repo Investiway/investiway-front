@@ -8,7 +8,7 @@
 
 ## Technologies Used
 * React: JavaScript library for building user interfaces
-* Redux-toolkit: State management library
+* Redux & Redux-toolkit: State management library
 * Material-UI: React UI framework
 * Tailwindcss: CSS framework packed with classes
 * Highchartjs: JavaScript library for data visualization
@@ -31,8 +31,8 @@
 
 ## Contributors
 * Heyday Le (hugnthinh.ckc@gmail.com)
-* Wawahuy (wawahuy@gmail.com)
-* Thien0110
+* Wawahuy (kakahuy@gmail.com)
+* lvthien0110 (lvthien0110@gmail.com)
 
 ## License
 This project is licensed under the MIT License - see the LICENSE.md file for details.
