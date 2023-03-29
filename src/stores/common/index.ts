@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type {Navigate} from "../../utils/types";
 interface ICommon {
-    currentRoute: Navigate
+    currentRoute: Navigate,
+    isLoading: boolean,
 }
 const commonSlice = createSlice({
     name: 'common',
@@ -9,6 +10,9 @@ const commonSlice = createSlice({
     reducers: {
         setCurrentRoute(state, { payload }) {
             state.currentRoute = payload
+        },
+        setLoading(state, { payload }) {
+            state.isLoading = payload
         }
     },
 });
