@@ -10,7 +10,7 @@ module.exports = {
                 secondary: '#f39c12',
             },
             fontFamily: {
-                'sans': ['Cutive Mono', 'Helvetica', 'Arial', 'sans-serif'],
+                'sans': ['Poppins', 'Helvetica', 'Arial', 'sans-serif'],
             }
         },
     },

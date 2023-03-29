@@ -1,20 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
-
+import type {Navigate} from "../../utils/types";
+interface ICommon {
+    currentRoute: Navigate
+}
 const commonSlice = createSlice({
     name: 'common',
-    initialState: {
-        enableAside: false,
-        currentRoute: 0
-    },
+    initialState: {} as ICommon,
     reducers: {
-        setAsideMenu(state) {
-            state.enableAside = !state.enableAside;
-        },
         setCurrentRoute(state, { payload }) {
             state.currentRoute = payload
         }
     },
 });
 
-export const { setAsideMenu, setCurrentRoute } = commonSlice.actions;
+export const { setCurrentRoute } = commonSlice.actions;
 export default commonSlice.reducer;

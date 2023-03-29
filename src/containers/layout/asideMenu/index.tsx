@@ -4,40 +4,41 @@ import { Navigation } from "../../../utils/enums";
 import type { Navigate } from "../../../utils/types";
 import { setCurrentRoute } from "../../../stores/common";
 import { useDispatch } from "react-redux";
+import { Link, useLocation } from 'react-router-dom'
 
 
 const AsideMenu = () => {
-
     const dispatch = useDispatch()
-    const [currentNav, setCurrentNav] = useState(0);
+    const location = useLocation()
     const onNavigating = (navigate: Navigate) => {
-        dispatch(setCurrentRoute(navigate.id))
-        setCurrentNav(navigate.id)
+        dispatch(setCurrentRoute(navigate))
     }
-    const getClassBorderBottom = (id: number) => {
-        if (currentNav === id)
+    const getClassBorderBottom = (path: string) => {
+        if (location.pathname === path)
             return 'tw-mt-auto tw-w-full tw-h-[1px] tw-bg-secondary'
         return 'tw-mt-auto tw-w-0 tw-h-[1px] tw-bg-secondary tw-duration-300 group-hover:tw-w-full group-hover:tw-bg-secondary'
     }
-    const getClassTitle = (id: number) => {
-        if (currentNav === id)
+    const getClassTitle = (path: string) => {
+        if (location.pathname === path)
             return 'tw-pb-2 tw-text-white'
         return 'tw-pb-2 tw-text-white'
     }
     const navigateItems = Navigation.map(navigate => (
+        <Link to={navigate.path} key={navigate.id}>
             <div
                 className="tw-font-sans tw-group tw-cursor-pointer tw-p-2"
                 onClick={() => onNavigating(navigate)}
             >
                 <div
-                    className={getClassTitle(navigate.id)}
+                    className={getClassTitle(navigate.path)}
                 >
                     {navigate.title}
                 </div>
                 <div
-                    className={getClassBorderBottom(navigate.id)}
+                    className={getClassBorderBottom(navigate.path)}
                 />
             </div>
+        </Link>
         )
     )
     return (
