@@ -1,44 +1,34 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import {createSlice} from "@reduxjs/toolkit";
-import { Middleware } from "@reduxjs/toolkit";
-import {AppState} from "./store";
 
-interface Result {
-    data: string
-}
 export const api = createApi({
     reducerPath: 'api',
 
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:8010/v1/',
+        baseUrl: 'http://localhost:8010/v1',
+        headers: {
+            authorization: `Bearer ` + localStorage.getItem('token')
+        }
     }),
 
     endpoints: (builder) => ({
-        loginByGoogle: builder.mutation<string, string>({
+        loginByGoogle: builder.mutation({
             query: () => ({
                 url: '/auth/google',
                 method: 'GET',
             })
         }) ,
-        getUser:builder.query({
-            query: () => 'Users'
+        loginByFacebook: builder.mutation({
+            query: () => ({
+                url: '/auth/facebook',
+                method: 'GET',
+            })
+        }) ,
+        getUser:builder.mutation({
+            query: () => ({
+                url: '/auth/access',
+                method: 'GET'
+            })
         })
     }),
 });
-export const middlewareSlice = createSlice({
-    name: 'middleware',
-    initialState: {
-        isAuth: false
-    },
-    reducers: {
-
-    },
-
-})
-
-export const appMiddleware: Middleware = (store) => (next) => (action) => {
-    const state:AppState = store.getState()
-    if (state.user.token)
-        return next(action);
-};
-export const { useLoginByGoogleMutation } = api;
+export const { useLoginByGoogleMutation, useLoginByFacebookMutation, useGetUserMutation } = api;

@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from './counter'
 import commonReducer from './common'
 import userReducer from './user'
-import { api, appMiddleware } from "./api";
+import { api } from "./api";
 import { setupListeners } from "@reduxjs/toolkit/query";
 const store = configureStore({
     reducer: {
@@ -13,7 +13,7 @@ const store = configureStore({
     },
 
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(appMiddleware),
+        getDefaultMiddleware().concat(api.middleware),
 });
 
 export type AppState = ReturnType<typeof store.getState>

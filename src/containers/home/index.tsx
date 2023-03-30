@@ -1,6 +1,7 @@
 import * as React from 'react'
 import request from '../../services/request'
 import { useLoginByGoogleMutation } from '../../stores/api'
+import {Container} from "@mui/material";
 request.get('/getUser')
     .then(response => {})
     .catch()
@@ -14,10 +15,9 @@ const MyComponent = () => {
         })
     }
     return (
-        <div className="">
-            <div>{isLoading ? 'loading' : ''}</div>
-            <button onClick={clickApi}>click</button>
-        </div>
+        <Container className="tw-p-4">
+
+        </Container>
     );
 }
 export default MyComponent

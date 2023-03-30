@@ -1,21 +1,39 @@
-import React, { useState } from 'react'
-import {Button, TextField, Typography} from "@mui/material";
-import { Link } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Button, TextField, Typography } from "@mui/material";
+import {Link, useNavigate, useSearchParams} from 'react-router-dom'
 import { ReactComponent as FacebookIcon } from '../../assets/icons/svg/facebook.svg'
 import { ReactComponent as GoogleIcon } from '../../assets/icons/svg/google.svg'
+import { useDispatch } from "react-redux";
+import { setToken } from "../../stores/user";
 
 const SignIn = () => {
-    const [state, setState] = useState()
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const [searchParams] = useSearchParams()
+    const currentToken = localStorage.getItem('token')
+    useEffect(() => {
+        const token:string|null = searchParams.get('token')
+        if (!!token && !currentToken) {
+            navigate('/')
+            dispatch(setToken(token))
+        }
+    }, [searchParams]);
+    const facebookAction = async () => {
+        window.location.href = process.env.REACT_APP_BASE_URL + '/auth/facebook'
+    }
+    const googleAction = async () => {
+        window.location.href = process.env.REACT_APP_BASE_URL + '/auth/google'
+    }
     const signInTypes = [
         {
             iconElement: <GoogleIcon/>,
             typeName: 'Google',
-            action: () => {}
+            action: () => googleAction(),
         },
         {
             iconElement: <FacebookIcon/>,
             typeName: 'Facebook',
-            action: () => {}
+            action: () => facebookAction()
         }
     ]
     return (

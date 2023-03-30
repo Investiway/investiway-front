@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect ,useState} from 'react';
 import {Routes, Route, useLocation, useNavigate} from 'react-router-dom'
 
 //region [Import styles]
@@ -12,53 +12,72 @@ import theme from "./styles/theme";
 import Header from "./containers/layout/header";
 import Footer from "./containers/layout/footer";
 import AsideMenu from "./containers/layout/asideMenu";
-import Home from "./containers/home";
-import Statistics from "./containers/statistics";
-import Plans from "./containers/plans";
-import Notes from "./containers/notes";
 import SignIn from "./containers/auth/signin";
 //#endregion
-import stores from "./stores/store";
-import { Provider } from 'react-redux'
+import { AppState } from "./stores/store";
+import { useDispatch, useSelector } from 'react-redux'
+import Loading from "./components/share/loading";
+import {useGetUserMutation} from "./stores/api";
+import PrivateRoutes from "./routes/privateRoutes";
+import { setLoading } from "./stores/common";
 function App() {
 
     const location = useLocation()
     const navigate = useNavigate()
-    function isAuthenticated() {
-        return localStorage.getItem('token') !== null;
-    }
+    const dispatch = useDispatch()
+    const [authenticated, setAuthenticated] = useState(false);
     const routesNotAuth = [
         '/sign-up', '/auth', '/404',
     ]
+    const userStore = useSelector((state: AppState) => state.user)
+    const [ getUser, { data, isLoading, error }] = useGetUserMutation()
     useEffect(() => {
-        if (!isAuthenticated() && !routesNotAuth.includes(location.pathname)) navigate('/auth')
-    }, [navigate])
+        const token = localStorage.getItem('token');
+        if (token && !userStore.currentUser) {
+            setAuthenticated(true)
+            // dispatch(setLoading(isLoading)
+            getUser(undefined).then(
+                response => {
+                    if (data) {
+                        setAuthenticated(true);
+                    }
+                }
+            )
+                .finally(() => {
+                    // dispatch(setLoading(false))
+                })
+        } else if (routesNotAuth.includes(location.pathname)) {
+            setAuthenticated(false)
+        }
+    }, [location.pathname]);
+
+    useEffect(() => {
+        dispatch(setLoading(isLoading))
+        console.log(isLoading)
+    }, [isLoading]);
+
+    const loading = useSelector((state:AppState) => state.common.isLoading);
+
   return (
     <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Provider store={stores}>
-            {isAuthenticated()
-                ?
-                (<div className="App tw-grid tw-grid-cols-[250px,1fr]">
-                    <AsideMenu/>
-                    <div className="tw-w-full">
-                        <Header/>
-                        <Routes>
-                            <Route path="/" element={<Home/>} />
-                            <Route path="/statistics" element={<Statistics/>} />
-                            <Route path="/plans" element={<Plans/>} />
-                            <Route path="/note" element={<Notes/>} />
-                        </Routes>
-                        <Footer/>
-                    </div>
-                </div>)
-                : (
-                    <Routes>
-                        <Route path="/auth" element={<SignIn/>} />
-                        <Route path="/sign-up" element={<>Sign</>}></Route>
-                    </Routes>
-                )}
-        </Provider>
+        { loading ? (<Loading />) : <></> }
+        {authenticated
+            ?
+            (<div className="App tw-grid tw-grid-cols-[250px,1fr]">
+                <AsideMenu/>
+                <div className="tw-w-full">
+                    <Header/>
+                    <PrivateRoutes isAuthenticated={authenticated}/>
+                    <Footer/>
+                </div>
+            </div>)
+            : (
+                <Routes>
+                    <Route path="/auth" element={<SignIn/>} />
+                    <Route path="/sign-up" element={<>Sign</>}></Route>
+                </Routes>
+            )}
     </ThemeProvider>
   );
 }

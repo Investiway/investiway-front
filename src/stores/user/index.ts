@@ -18,6 +18,7 @@ const userSlice = createSlice({
         },
         setToken(state, { payload }) {
             state.token = payload
+            localStorage.setItem('token', payload)
         },
         [ACTION.GET_USER](state, { payload }) {
             request.post('/')

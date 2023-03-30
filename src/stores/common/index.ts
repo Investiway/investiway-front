@@ -2,11 +2,15 @@ import { createSlice } from '@reduxjs/toolkit';
 import type {Navigate} from "../../utils/types";
 interface ICommon {
     currentRoute: Navigate,
-    isLoading: boolean,
+    isLoading: false | boolean,
+}
+const initialState:ICommon = {
+    currentRoute: {} as Navigate,
+    isLoading: false
 }
 const commonSlice = createSlice({
     name: 'common',
-    initialState: {} as ICommon,
+    initialState,
     reducers: {
         setCurrentRoute(state, { payload }) {
             state.currentRoute = payload
@@ -17,5 +21,5 @@ const commonSlice = createSlice({
     },
 });
 
-export const { setCurrentRoute } = commonSlice.actions;
+export const { setCurrentRoute, setLoading } = commonSlice.actions;
 export default commonSlice.reducer;
