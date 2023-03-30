@@ -1,17 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from './counter'
 import commonReducer from './common'
-import { api } from "./api";
+import userReducer from './user'
+import { api, appMiddleware } from "./api";
 import { setupListeners } from "@reduxjs/toolkit/query";
 const store = configureStore({
     reducer: {
         counter: counterReducer,
         common: commonReducer,
-        [api.reducerPath]: api.reducer
+        user: userReducer,
+        [api.reducerPath]: api.reducer,
     },
 
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(api.middleware),
+        getDefaultMiddleware().concat(appMiddleware),
 });
 
 export type AppState = ReturnType<typeof store.getState>

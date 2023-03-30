@@ -4,21 +4,31 @@ export const Navigation: Navigate[] = [
     {
         id: 0,
         title: 'General',
-        path: '/'
+        path: '/',
+        isAuth: true
     },
     {
         id: 1,
         title: 'Statistics',
-        path: '/statistics'
+        path: '/statistics',
+        isAuth: true
     },
     {
         id: 2,
         title: 'Plans',
-        path: '/plans'
+        path: '/plans',
+        isAuth: true
     },
     {
         id: 3,
         title: 'Note',
-        path: '/note'
+        path: '/note',
+        isAuth: true
+    },
+    {
+        id: 4,
+        title: 'Login',
+        path: '/auth',
+        isAuth: false
     },
 ]

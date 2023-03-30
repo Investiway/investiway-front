@@ -23,23 +23,24 @@ const AsideMenu = () => {
             return 'tw-pb-2 tw-text-white'
         return 'tw-pb-2 tw-text-white'
     }
-    const navigateItems = Navigation.map(navigate => (
-        <Link to={navigate.path} key={navigate.id}>
-            <div
-                className="tw-font-sans tw-group tw-cursor-pointer tw-p-2"
-                onClick={() => onNavigating(navigate)}
-            >
-                <div
-                    className={getClassTitle(navigate.path)}
-                >
-                    {navigate.title}
-                </div>
-                <div
-                    className={getClassBorderBottom(navigate.path)}
-                />
-            </div>
-        </Link>
-        )
+    const navigateItems = Navigation.map(navigate =>
+        (navigate.isAuth) ? (
+                <Link to={navigate.path} key={navigate.id}>
+                    <div
+                        className="tw-font-sans tw-group tw-cursor-pointer tw-p-2"
+                        onClick={() => onNavigating(navigate)}
+                    >
+                        <div
+                            className={getClassTitle(navigate.path)}
+                        >
+                            {navigate.title}
+                        </div>
+                        <div
+                            className={getClassBorderBottom(navigate.path)}
+                        />
+                    </div>
+                </Link>
+                ) : <></>
     )
     return (
         <div className="tw-h-[100vh] tw-p-4 tw-space-y-4 tw-bg-primary tw-font-mono">
