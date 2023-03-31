@@ -12,12 +12,12 @@ const SignIn = () => {
     const [searchParams] = useSearchParams()
     const currentToken = localStorage.getItem('token')
     useEffect(() => {
-        const token:string|null = searchParams.get('token')
+        const token:string|null = searchParams.get('access_token')
         if (!!token && !currentToken) {
             navigate('/')
             dispatch(setToken(token))
         }
-    }, [searchParams]);
+    }, []);
     const facebookAction = async () => {
         window.location.href = process.env.REACT_APP_BASE_URL + '/auth/facebook'
     }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { ReactComponent as Logo } from '../../../logo.svg'
 import { Navigation } from "../../../utils/enums";
 import type { Navigate } from "../../../utils/types";
@@ -23,21 +23,18 @@ const AsideMenu = () => {
             return 'tw-pb-2 tw-text-white'
         return 'tw-pb-2 tw-text-white'
     }
-    const navigateItems = Navigation.map(navigate =>
+    const navigateItems = Navigation.map((navigate, index) =>
         (navigate.isAuth) ? (
-                <Link to={navigate.path} key={navigate.id}>
+                <Link to={navigate.path}>
                     <div
+                        key={index}
                         className="tw-font-sans tw-group tw-cursor-pointer tw-p-2"
                         onClick={() => onNavigating(navigate)}
                     >
-                        <div
-                            className={getClassTitle(navigate.path)}
-                        >
+                        <div className={getClassTitle(navigate.path)}>
                             {navigate.title}
                         </div>
-                        <div
-                            className={getClassBorderBottom(navigate.path)}
-                        />
+                        <div className={getClassBorderBottom(navigate.path)}/>
                     </div>
                 </Link>
                 ) : <></>

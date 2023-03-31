@@ -2,9 +2,8 @@ import React from 'react'
 import {useLocation, useNavigate} from "react-router-dom";
 import {Navigation} from "../../../utils/enums";
 import {Button} from "@mui/material";
-import {useDispatch, useSelector} from "react-redux";
-import {AppState} from "../../../stores/store";
-import {setToken} from "../../../stores/user";
+import {useDispatch} from "react-redux";
+import {setToken, setUser} from "../../../stores/user";
 
 const Header = () => {
     const location = useLocation()
@@ -13,6 +12,7 @@ const Header = () => {
     const navigate = useNavigate()
     const logout = () => {
         dispatch(setToken(''))
+        dispatch(setUser(''))
         navigate('/auth')
     }
 
