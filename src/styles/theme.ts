@@ -16,7 +16,16 @@ const theme = createTheme({
         },
         background: {
             default: '#282c34',
-        }
+        },
+    },
+    typography: {
+        fontFamily: [
+            'Poppins',
+            'sans-serif',
+            '"Apple Color Emoji"',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"',
+        ].join(','),
     },
 });
 

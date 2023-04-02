@@ -4,6 +4,7 @@ import {Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 //region [Import styles]
 import './tailwind.css'
 import './index.css'
+import 'react-toastify/dist/ReactToastify.css';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from "./styles/theme";
@@ -14,14 +15,14 @@ import Footer from "./containers/layout/footer";
 import AsideMenu from "./containers/layout/asideMenu";
 import SignIn from "./containers/auth/signin";
 //#endregion
-import stores, { AppState } from "./stores/store";
+import { AppState } from "./stores/store";
 import { useDispatch, useSelector } from 'react-redux'
 import Loading from "./components/share/loading";
 import PrivateRoutes from "./routes/privateRoutes";
 import { setLoading } from "./stores/common";
-import {setUser} from "./stores/user";
+import { setUser } from "./stores/user";
 import request from "./services/request";
-import { Provider } from 'react-redux'
+import { toast, ToastContainer } from "react-toastify";
 function App() {
 
     const location = useLocation()
@@ -39,6 +40,9 @@ function App() {
             .then(res => {
                 if (res.data) {
                     dispatch(setUser(res.data))
+                    // toast('Login success!', {
+                    //     position: "bottom-right"
+                    // })
                 }
             })
             .catch(() => {
@@ -48,11 +52,7 @@ function App() {
                 dispatch(setLoading(false))
             })
     }
-    const fetchAuth = useCallback(() => {
-        console.log(authenticated)
-    }, [authenticated])
 
-    fetchAuth()
     useEffect(() => {
         getUser()
     }, []);
@@ -60,6 +60,7 @@ function App() {
 
     return (
         <ThemeProvider theme={theme}>
+            <ToastContainer/>
             <CssBaseline />
             <Loading isLoading={loading}/>
             {authenticated ? <div className="App tw-grid tw-grid-cols-[250px,1fr]">
