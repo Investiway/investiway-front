@@ -11,6 +11,12 @@ module.exports = {
             },
             fontFamily: {
                 'sans': ['Poppins', 'Helvetica', 'Arial', 'sans-serif'],
+            },
+            keyframes: {
+              scale: 'transform: scale(1.2)'
+            },
+            animation: {
+                scale: 'scale 400ms 400ms'
             }
         },
     },
