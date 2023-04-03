@@ -14,11 +14,18 @@ const Goal = () => {
     const arr = [1,2,3,4,5,6,7,8,9,10]
     const goalItem = () => {
         return arr.map(item => (
-                <div className="tw-group tw-relative tw-border tw-border-gray-600 tw-rounded-2xl tw-duration-300 tw-transform tw-cursor-pointer tw-min-w-[220px] tw-min-h-[220px]">
+                <div className="
+                    tw-group tw-relative
+                    tw-shadow-2xl tw-rounded-2xl
+                    tw-duration-300 tw-transform
+                    tw-cursor-pointer
+                    tw-min-w-[220px] tw-min-h-[220px]
+                    hover:tw-shadow-gray-900"
+                >
                     <Button className="!tw-absolute tw-right-0">
                         <HorizontalRuleOutlined className="tw-text-white"/>
                     </Button>
-                    <div className="tw-h-4 tw-w-1/2 tw-rounded-br-2xl tw-rounded-tl-xl tw-bg-amber-300" />
+                    <div className="tw-h-4 tw-w-1/2 tw-rounded-br-2xl tw-rounded-tl-xl tw-bg-opacity-70 tw-backdrop-blur-2xl tw-bg-amber-200" />
                     <div className="tw-p-4">
                         <Typography variant="h5">Title</Typography>
                         <div className="tw-mt-4">
@@ -26,7 +33,7 @@ const Goal = () => {
                             <Typography variant="h5">XXX.XXX.XXX</Typography>
                         </div>
                     </div>
-                    <div className="tw-p-4 tw-duration-300 tw-border-t-gray-600 tw-border-t">
+                    <div className="tw-p-4 tw-duration-300">
                         descriptions
                     </div>
                 </div>))
@@ -64,15 +71,15 @@ const Goal = () => {
                 <div></div>
             </div>
             <div className="tw-h-[calc(100vh-11rem)] tw-overflow-hidden">
-                <div className="tw-grid tw-grid-cols-4 tw-gap-6 tw-overflow-y-auto tw-h-full">
-                <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-border tw-border-gray-600 tw-duration-300 hover:tw-border-gray-300 tw-cursor-pointer tw-rounded-2xl tw-min-w-[220px] tw-min-h-[220px]">
-                    <Add className="tw-text-gray-600 tw-mx-auto"/>
-                    <Typography variant="h5" className="tw-text-center tw-text-gray-600">Add goal</Typography>
+                <div className="tw-grid tw-grid-cols-4 tw-gap-8 tw-overflow-y-auto tw-h-full tw-p-4 tw-rounded-xl tw-shadow-2xl">
+                    <div className="tw-flex tw-flex-col tw-shadow-2xl tw-items-center tw-justify-center tw-border tw-border-gray-600 tw-duration-300 hover:tw-border-gray-300 tw-cursor-pointer tw-rounded-2xl tw-min-w-[220px] tw-min-h-[220px]">
+                        <Add className="tw-text-gray-600 tw-mx-auto"/>
+                        <Typography variant="h5" className="tw-text-center tw-text-gray-600">Add goal</Typography>
+                    </div>
+                    {
+                        goalItem()
+                    }
                 </div>
-                {
-                    goalItem()
-                }
-            </div>
             </div>
         </Container>
     )

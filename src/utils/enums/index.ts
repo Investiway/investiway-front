@@ -3,7 +3,7 @@ import type { Navigate } from "../types";
 export const Navigation: Navigate[] = [
     {
         id: 0,
-        title: 'General',
+        title: 'Dashboard',
         path: '/',
         isAuth: true
     },

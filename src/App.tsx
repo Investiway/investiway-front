@@ -41,9 +41,6 @@ function App() {
                 if (res.data) {
                     dispatch(setUser(res.data))
                     navigate('/')
-                    // toast('Login success!', {
-                    //     position: "bottom-right"
-                    // })
                 }
             })
             .catch(() => {
@@ -62,7 +59,8 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <ToastContainer/>
-            <CssBaseline />
+            {/*<CssBaseline />*/}
+            <div className="tw-h-[100vh] tw-text-gray-300 tw-bg-black tw-shadow-lg tw-bg-opacity-70 tw-backdrop-blur-2xl">
             <Loading isLoading={loading}/>
             {authenticated ? <div className="App tw-grid tw-grid-cols-[250px,1fr]">
                 <AsideMenu/>
@@ -76,6 +74,7 @@ function App() {
                 <Route path="/auth" element={<SignIn/>} />
                 <Route path="/sign-up" element={<>Sign</>}></Route>
             </Routes>
+            </div>
         </ThemeProvider>
     );
 }

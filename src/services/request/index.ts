@@ -13,14 +13,13 @@ request.interceptors.response.use(response => response, error => {
     const status = error.response ? error.response.status : null
 
     if (status === 401) {
-        request.get('/auth/refresh')
-            .then(response => {
-                error.config.headers['Authorization'] = 'Bearer ' + response.data;
-            })
-        error.config.baseURL = undefined;
-        return request.request(error.config);
+        // request.get('/auth/refresh')
+        //     .then(response => {
+        //         error.config.headers['Authorization'] = 'Bearer ' + response.data;
+        //     })
+        // error.config.baseURL = undefined;
+        // return request.request(error.config);
     }
-
     return Promise.reject(error);
 });
 export default request;

@@ -40,7 +40,7 @@ const AsideMenu = () => {
                 ) : <></>
     )
     return (
-        <div className="tw-h-[100vh] tw-p-4 tw-space-y-4 tw-bg-primary tw-font-mono">
+        <div className="tw-h-[100vh] tw-p-4 tw-space-y-4 tw-font-mono tw-shadow-2xl">
             <div className="tw-flex tw-flex-1 tw-items-center tw-space-x-2">
                 <Logo className="tw-w-14 tw-h-auto"/>
                 <h1 className="tw-font-sans tw-text-2xl tw-text-secondary">Investiway</h1>
