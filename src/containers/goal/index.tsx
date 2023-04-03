@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import {Container, Typography, MenuItem, InputLabel, Box, FormControl, TextField} from "@mui/material";
+import {Container, Typography, MenuItem, InputLabel, Box, FormControl, TextField, Button} from "@mui/material";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { DateTimePicker } from "@mui/x-date-pickers"
+import { DatePicker } from "@mui/x-date-pickers"
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { Add } from "@mui/icons-material";
+import {Add, HorizontalRuleOutlined} from "@mui/icons-material";
 
 const Goal = () => {
     const [type, setType] = useState('')
@@ -14,7 +14,10 @@ const Goal = () => {
     const arr = [1,2,3,4,5,6,7,8,9,10]
     const goalItem = () => {
         return arr.map(item => (
-                <div className="tw-group tw-border tw-border-gray-600 tw-rounded-2xl tw-duration-300 tw-transform tw-cursor-pointer tw-min-w-[220px] tw-min-h-[220px]">
+                <div className="tw-group tw-relative tw-border tw-border-gray-600 tw-rounded-2xl tw-duration-300 tw-transform tw-cursor-pointer tw-min-w-[220px] tw-min-h-[220px]">
+                    <Button className="!tw-absolute tw-right-0">
+                        <HorizontalRuleOutlined className="tw-text-white"/>
+                    </Button>
                     <div className="tw-h-4 tw-w-1/2 tw-rounded-br-2xl tw-rounded-tl-xl tw-bg-amber-300" />
                     <div className="tw-p-4">
                         <Typography variant="h5">Title</Typography>
@@ -50,11 +53,11 @@ const Goal = () => {
                         </div>
                         <div>
                             <LocalizationProvider labelId="datetime-label" dateAdapter={AdapterDayjs}>
-                                <DateTimePicker />
+                                <DatePicker />
                             </LocalizationProvider>
                         </div>
                         <div>
-                            <TextField placeholder="Type keyword..."/>
+                            <TextField label="Search" placeholder="Type keyword..."/>
                         </div>
                     </FormControl>
                 </Box>

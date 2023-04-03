@@ -40,6 +40,7 @@ function App() {
             .then(res => {
                 if (res.data) {
                     dispatch(setUser(res.data))
+                    navigate('/')
                     // toast('Login success!', {
                     //     position: "bottom-right"
                     // })

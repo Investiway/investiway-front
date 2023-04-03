@@ -14,7 +14,6 @@ const SignIn = () => {
     useEffect(() => {
         const token:string|null = searchParams.get('access_token')
         if (!!token && !currentToken) {
-            navigate('/')
             dispatch(setToken(token))
         }
     }, []);
