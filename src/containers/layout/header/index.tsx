@@ -15,7 +15,7 @@ const Header = () => {
     const title = ():string => {
         if (location.pathname === '/') {
             if (userStore.currentUser?.firstName) {
-                return 'Hi, ' +  userStore.currentUser?.firstName + userStore.currentUser?.lastName || ''
+                return 'Hi, ' +  userStore.currentUser?.firstName + ' ' + userStore.currentUser?.lastName || ''
             }
         }
         return currentRoute?.title || ''

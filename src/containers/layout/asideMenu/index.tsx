@@ -28,7 +28,7 @@ const AsideMenu = () => {
                 <Link to={navigate.path}>
                     <div
                         key={index}
-                        className="tw-font-sans tw-group tw-cursor-pointer tw-p-2"
+                        className="tw-font-sans tw-group tw-cursor-pointer tw-px-2 tw-pt-4 tw-pb-0"
                         onClick={() => onNavigating(navigate)}
                     >
                         <div className={getClassTitle(navigate.path)}>

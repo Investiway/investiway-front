@@ -32,6 +32,7 @@ function App() {
     const userStore = useSelector((state: AppState) => state.user)
     const loading = useSelector((state:AppState) => state.common.isLoading);
     const authenticated = !!useMemo(() => userStore.currentUser, [userStore.currentUser]);
+    // const authenticated = true;
 
     const getUser = () => {
         if (userStore.currentUser) return
