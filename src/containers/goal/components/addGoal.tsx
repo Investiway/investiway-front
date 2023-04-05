@@ -48,7 +48,7 @@ const AddGoal = ({isOpen, handleClose}:propsGoadInterface) => {
                 <Box sx={{ ...style, width: 600 }} className="tw-flex tw-flex-col tw-space-y-4">
                     <h2 className="tw-text-xl tw-text-gray-300 tw-font-bold">Create goal</h2>
                     <TextField placeholder="Goal name"/>
-                    <TextField placeholder="Expected monetary value"/>
+                    <TextField placeholder="Saving goal"/>
                     <FormControl>
                         <FormLabel>Priority</FormLabel>
                         <RadioGroup
