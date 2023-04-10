@@ -32,6 +32,7 @@ function App() {
     const userStore = useSelector((state: AppState) => state.user)
     const loading = useSelector((state:AppState) => state.common.isLoading);
     const authenticated = !!useMemo(() => userStore.currentUser, [userStore.currentUser]);
+    // const authenticated = true;
 
     const getUser = () => {
         if (userStore.currentUser) return
@@ -40,9 +41,7 @@ function App() {
             .then(res => {
                 if (res.data) {
                     dispatch(setUser(res.data))
-                    // toast('Login success!', {
-                    //     position: "bottom-right"
-                    // })
+                    navigate('/')
                 }
             })
             .catch(() => {
@@ -61,7 +60,8 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <ToastContainer/>
-            <CssBaseline />
+            {/*<CssBaseline />*/}
+            <div className="tw-h-[100vh] tw-text-gray-300 tw-bg-black tw-shadow-lg tw-bg-opacity-70 tw-backdrop-blur-2xl">
             <Loading isLoading={loading}/>
             {authenticated ? <div className="App tw-grid tw-grid-cols-[250px,1fr]">
                 <AsideMenu/>
@@ -75,6 +75,7 @@ function App() {
                 <Route path="/auth" element={<SignIn/>} />
                 <Route path="/sign-up" element={<>Sign</>}></Route>
             </Routes>
+            </div>
         </ThemeProvider>
     );
 }

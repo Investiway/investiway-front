@@ -14,7 +14,6 @@ const SignIn = () => {
     useEffect(() => {
         const token:string|null = searchParams.get('access_token')
         if (!!token && !currentToken) {
-            navigate('/')
             dispatch(setToken(token))
         }
     }, []);
@@ -42,7 +41,7 @@ const SignIn = () => {
                 <Typography variant="h5">LOGIN</Typography>
                 <TextField placeholder="Username" />
                 <TextField placeholder="Password" />
-                <Button variant="contained">Sign in</Button>
+                <Button variant="contained" className="!tw-bg-transparent tw-shadow-2xl">Sign in</Button>
             </div>
             <div className="tw-space-x-4">
             {
@@ -54,7 +53,7 @@ const SignIn = () => {
                 ))
             }
             </div>
-            <Link to="/sign-up">Signup</Link>
+            {/*<Link to="/sign-up">Signup</Link>*/}
         </div>
     )
 }

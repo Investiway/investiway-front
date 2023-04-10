@@ -4,6 +4,9 @@ body {
   font-family: 'Poppins',sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100vh;
+  background: url('./assets/images/bg-main.jpg');
+  background-size: cover;
 }
 html {
   font-family: "Poppins", sans-serif;
