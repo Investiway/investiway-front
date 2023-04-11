@@ -39,7 +39,6 @@ function App() {
       .then((res) => {
         if (res.data) {
           dispatch(setUser(res.data));
-          navigate('/');
         }
       })
       .catch((error) => {
