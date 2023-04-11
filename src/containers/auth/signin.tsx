@@ -40,7 +40,7 @@ const SignIn = () => {
         <Typography variant="h5">LOGIN</Typography>
         <TextField placeholder="Username" />
         <TextField placeholder="Password" />
-        <Button variant="contained" className="!tw-bg-transparent tw-shadow-2xl">
+        <Button variant="contained" className="!tw-bg-transparent !tw-text-white tw-shadow-2xl">
           Sign in
         </Button>
       </div>

@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loading from './components/share/loading';
 import PrivateRoutes from './routes/privateRoutes';
 import { setLoading } from './stores/common';
-import { setUser } from './stores/user';
+import { setToken, setUser } from './stores/user';
 import request from './services/request';
 import { ToastContainer } from 'react-toastify';
 function App() {
@@ -42,8 +42,18 @@ function App() {
           navigate('/');
         }
       })
-      .catch(() => {
-        navigate('/auth');
+      .catch((error) => {
+        if (error.response.data.statusCode === 401) {
+          request
+            .get('/auth/refresh')
+            .then((response) => {
+              dispatch(setToken(response.data));
+            })
+            .catch(() => {
+              navigate('/auth');
+              dispatch(setToken(''));
+            });
+        }
       })
       .finally(() => {
         dispatch(setLoading(false));
