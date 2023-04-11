@@ -1,23 +1,51 @@
 import React, { useState } from 'react';
 import { Typography, MenuItem, InputLabel, Box, FormControl, TextField, Button } from '@mui/material';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import { DatePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Add, HorizontalRuleOutlined } from '@mui/icons-material';
-import AddGoal from './components/addGoal';
+import AddGoal from '../../components/pages/goal/addGoal';
+import type { FilterGoal } from '../../utils/interfaces/goal';
 
 const Goal = () => {
-  const [type, setType] = useState('');
+  const filterSchema: FilterGoal = {
+    type: '',
+    date: null,
+    priority: '',
+    keyword: '',
+  };
   const [showModal, setShowModal] = useState(false);
+  const [filter, setFilter] = useState(filterSchema);
   const enableModel = () => {
     setShowModal(true);
   };
   const closeModel = () => {
     setShowModal(false);
   };
-  const changeType = (event: SelectChangeEvent) => {
-    setType(event.target.value);
+  const keywordChange = (value: string) => {
+    setFilter((prevState) => {
+      return {
+        ...prevState,
+        keyword: value,
+      };
+    });
+  };
+  const changeType = (value: string) => {
+    setFilter((prevState) => {
+      return {
+        ...prevState,
+        type: value,
+      };
+    });
+  };
+  const changeDate = (value: any) => {
+    setFilter((prevState) => {
+      return {
+        ...prevState,
+        date: value,
+      };
+    });
   };
   const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const goalItem = () => {
@@ -58,22 +86,28 @@ const Goal = () => {
                 labelId="type-select-label"
                 id="select-label"
                 className="tw-w-40"
-                value={type}
+                value={filter.type}
                 label="Type"
-                onChange={changeType}
+                onChange={(event) => changeType(event.target.value)}
               >
                 <MenuItem value={10}>Ten</MenuItem>
                 <MenuItem value={20}>Twenty</MenuItem>
                 <MenuItem value={30}>Thirty</MenuItem>
               </Select>
             </div>
-            <div>
+            <div className="tw-w-80">
               <LocalizationProvider labelId="datetime-label" dateAdapter={AdapterDayjs}>
-                <DatePicker />
+                <DatePicker value={filter.date} onChange={(value: any) => changeDate(value)} />
               </LocalizationProvider>
             </div>
             <div className="tw-w-full">
-              <TextField label="Search" fullWidth={true} placeholder="Type keyword..." />
+              <TextField
+                label="Search"
+                value={filter.keyword}
+                onChange={(event) => keywordChange(event.target.value)}
+                fullWidth={true}
+                placeholder="Type keyword..."
+              />
             </div>
           </FormControl>
         </Box>

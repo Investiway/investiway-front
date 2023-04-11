@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { Button, TextField, Typography } from '@mui/material';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ReactComponent as FacebookIcon } from '../../assets/icons/svg/facebook.svg';
 import { ReactComponent as GoogleIcon } from '../../assets/icons/svg/google.svg';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../../stores/user';
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const currentToken = localStorage.getItem('token');
@@ -14,6 +15,7 @@ const SignIn = () => {
     const token: string | null = searchParams.get('access_token');
     if (!!token && !currentToken) {
       dispatch(setToken(token));
+      navigate('/');
     }
   }, []);
   const facebookAction = async () => {
