@@ -80,7 +80,7 @@ const AddGoal = ({ isOpen, handleClose }: propsGoadInterface) => {
             </Select>
           </FormControl>
           <LocalizationProvider labelId="datetime-label" dateAdapter={AdapterDayjs}>
-            <DatePicker className="tw-flex-1" />
+            <DatePicker label="Date goal" className="tw-flex-1" />
           </LocalizationProvider>
         </div>
         <TextareaAutosize
