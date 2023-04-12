@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 //region [Import styles]
 import './tailwind.css';
@@ -19,11 +19,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loading from './components/share/loading';
 import PrivateRoutes from './routes/privateRoutes';
 import { setLoading } from './stores/common';
-import { setToken, setUser } from './stores/user';
+import { setUser, refreshToken } from './stores/user';
 import request from './services/request';
 import { ToastContainer } from 'react-toastify';
 function App() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const userStore = useSelector((state: AppState) => state.user);
@@ -42,16 +41,9 @@ function App() {
         }
       })
       .catch((error) => {
+        console.log(error, 123);
         if (error.response.data.statusCode === 401) {
-          request
-            .get('/auth/refresh')
-            .then((response) => {
-              dispatch(setToken(response.data));
-            })
-            .catch(() => {
-              navigate('/auth');
-              dispatch(setToken(''));
-            });
+          dispatch(refreshToken());
         }
       })
       .finally(() => {
