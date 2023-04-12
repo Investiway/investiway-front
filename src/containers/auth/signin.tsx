@@ -13,16 +13,18 @@ const SignIn = () => {
   const currentToken = localStorage.getItem('token');
   useEffect(() => {
     const token: string | null = searchParams.get('access_token');
+    const refreshToken: string | null = searchParams.get('refresh_token');
     if (!!token && !currentToken) {
-      dispatch(setToken(token));
+      dispatch(setToken({ token, refreshToken }));
       navigate('/');
     }
   }, []);
   const facebookAction = async () => {
-    window.location.href = process.env.REACT_APP_BASE_URL + '/auth/facebook';
+    console.log(import.meta);
+    window.location.href = process.env.VITE_BASE_API_URL + '/auth/facebook';
   };
   const googleAction = async () => {
-    window.location.href = process.env.REACT_APP_BASE_URL + '/auth/google';
+    window.location.href = process.env.VITE_BASE_API_URL + '/auth/google';
   };
   const signInTypes = [
     {
