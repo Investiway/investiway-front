@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { User } from '../../utils/interfaces';
 import request from '../../services/request';
+import { RefreshTokenUser } from '../../api/user';
 import { setLoading } from '../common';
 
 const ACTION = {
@@ -9,6 +10,7 @@ const ACTION = {
 interface UserStore {
   currentUser: User;
   token: string;
+  refreshToken: string;
 }
 const userSlice = createSlice({
   name: 'user',
@@ -18,8 +20,10 @@ const userSlice = createSlice({
       state.currentUser = payload;
     },
     setToken(state, { payload }) {
-      state.token = payload;
-      localStorage.setItem('token', payload);
+      state.token = payload.token;
+      state.refreshToken = payload.refreshToken;
+      localStorage.setItem('token', payload.token);
+      localStorage.setItem('refresh_token', payload.refreshToken);
     },
     [ACTION.GET_USER]() {
       request
@@ -30,10 +34,11 @@ const userSlice = createSlice({
         .catch()
         .finally();
     },
-    refreshToken() {
+    refreshToken(state) {
       setLoading(true);
-      request
-        .get('/auth/refresh')
+      console.log(state.refreshToken);
+      console.log(state.refreshToken===state.token);
+      RefreshTokenUser(state.refreshToken)
         .then((response) => {
           setToken(response.data);
         })
@@ -45,5 +50,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, setToken } = userSlice.actions;
+export const { setUser, setToken, refreshToken } = userSlice.actions;
 export default userSlice.reducer;

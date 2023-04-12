@@ -15,6 +15,9 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   (response) => response,
   (error) => {
+    if (error.response.data.statusCode === 401) {
+      // location.replace(import.meta.env.VITE_BASE_API_URL + 'auth');
+    }
     return Promise.reject(error);
   },
 );
