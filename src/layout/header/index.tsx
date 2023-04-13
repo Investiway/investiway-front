@@ -1,10 +1,10 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Navigation } from '../../../utils/enums';
+import { Navigation } from '../../utils/enums';
 import { Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { setToken, setUser } from '../../../stores/user';
-import { AppState } from '../../../stores/store';
+import { setToken, setUser } from '../../stores/user';
+import { AppState } from '../../stores/store';
 
 const Header = () => {
   const location = useLocation();
