@@ -34,13 +34,13 @@ const userSlice = createSlice({
         .catch()
         .finally();
     },
-    refreshToken(state) {
+    refreshToken() {
       setLoading(true);
-      console.log(state.refreshToken);
-      console.log(state.refreshToken===state.token);
-      RefreshTokenUser(state.refreshToken)
+      const refreshToken = String(localStorage.getItem('refresh_token'));
+      RefreshTokenUser(refreshToken)
         .then((response) => {
-          setToken(response.data);
+          const token = response.data.result.accessToken;
+          localStorage.setItem('token', token);
         })
         .catch()
         .finally(() => {

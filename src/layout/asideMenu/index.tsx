@@ -1,8 +1,8 @@
 import React from 'react';
-import { ReactComponent as Logo } from '../../../logo.svg';
-import { Navigation } from '../../../utils/enums';
-import type { Navigate } from '../../../utils/types';
-import { setCurrentRoute } from '../../../stores/common';
+import { ReactComponent as Logo } from '../../logo.svg';
+import { Navigation } from '../../utils/enums';
+import type { Navigate } from '../../utils/types';
+import { setCurrentRoute } from '../../stores/common';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 

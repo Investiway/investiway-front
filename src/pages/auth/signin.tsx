@@ -10,17 +10,15 @@ const SignIn = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
-  const currentToken = localStorage.getItem('token');
   useEffect(() => {
     const token: string | null = searchParams.get('access_token');
     const refreshToken: string | null = searchParams.get('refresh_token');
-    if (!!token && !currentToken) {
+    if (!!token && !!refreshToken) {
       dispatch(setToken({ token, refreshToken }));
       navigate('/');
     }
   }, []);
   const facebookAction = async () => {
-    console.log(import.meta);
     window.location.href = process.env.VITE_BASE_API_URL + '/auth/facebook';
   };
   const googleAction = async () => {

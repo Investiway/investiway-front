@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Home from '../containers/home';
-import Statistics from '../containers/statistics';
-import Plans from '../containers/plans';
-import Notes from '../containers/notes';
-import SignIn from '../containers/auth/signin';
-import Goal from '../containers/goal';
+import Home from '../pages/home';
+import Statistics from '../pages/statistics';
+import Plans from '../pages/plans';
+import Notes from '../pages/notes';
+import SignIn from '../pages/auth/signin';
+import Goal from '../pages/goal';
 
 interface ComponentProps {
   isAuthenticated: boolean;
