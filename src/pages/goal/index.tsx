@@ -127,7 +127,7 @@ const Goal = () => {
     },
     {
       title: 'Mua Macbook Pro M2',
-      date: dayjs('01/11/2023'),
+      date: dayjs('30/11/2023', 'dd/MM/YYYY'),
       savingGoal: '40000000',
       description: 'xxxx',
       priority: 'High',
@@ -157,7 +157,7 @@ const Goal = () => {
           tw-shadow-2xl tw-rounded-2xl
           tw-duration-300 tw-transform
           tw-cursor-pointer
-          tw-min-w-[220px] tw-min-h-[260px]
+          tw-min-w-[280px] tw-min-h-[260px]
           hover:tw-shadow-gray-900"
         onClick={() => editGoal(item)}
       >
@@ -172,7 +172,7 @@ const Goal = () => {
         <div className="tw-p-4">
           <Typography variant="h5">{item.title}</Typography>
           <div className="tw-mt-4">
-            <span>{dayjs(item.date, 'DD/MM/YYYY').toString()}</span>
+            <span>{dayjs(item.date).format('DD/MM/YYYY')}</span>
             <Typography variant="h5">{item.savingGoal}</Typography>
           </div>
         </div>
@@ -220,7 +220,7 @@ const Goal = () => {
         <div></div>
       </div>
       <div className="tw-h-[calc(100vh-11rem)] tw-overflow-hidden">
-        <div className="tw-grid tw-grid-cols-4 2xl:tw-grid-cols-4 tw-gap-8 tw-overflow-y-auto tw-h-full tw-p-4 tw-rounded-xl tw-shadow-2xl">
+        <div className="tw-grid tw-grid-cols-2 2xl:tw-grid-cols-4 tw-gap-8 tw-overflow-y-auto tw-h-full tw-p-4 tw-rounded-xl tw-shadow-2xl">
           <div
             className="tw-flex tw-flex-col tw-shadow-2xl tw-items-center tw-justify-center tw-border tw-border-gray-600 tw-duration-300 hover:tw-border-gray-300 tw-cursor-pointer tw-rounded-2xl tw-min-w-[220px] tw-min-h-[220px]"
             onClick={enableModel}
