@@ -31,7 +31,7 @@
 
 ## Contributors
 * Heyday Le (hugnthinh.ckc@gmail.com)
-* Wawahuy (kakahuy@gmail.com)
+* Wawahuy (kakahuy99@gmail.com)
 * lvthien0110 (lvthien0110@gmail.com)
 
 ## License
