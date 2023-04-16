@@ -38,8 +38,8 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development && vite",
     "build": "cross-env NODE_ENV=production vite build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "test": "cross-env NODE_ENV=development && vite test",
+    "eject": "cross-env NODE_ENV=development && vite eject",
     "release": "standard-version && git push --follow-tags"
   },
   "hooks": {
@@ -80,6 +80,7 @@
     "@vitejs/plugin-react": "^3.1.0",
     "babel-loader": "^9.1.2",
     "cross-env": "^7.0.3",
+    "cypress": "^12.9.0",
     "dotenv": "^16.0.3",
     "eslint": "^8.38.0",
     "eslint-config-prettier": "^8.8.0",
