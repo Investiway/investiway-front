@@ -1,5 +1,5 @@
 import React from 'react';
-import Home from '../../containers/home';
+import Home from '../../pages/home';
 import Header from '../header';
 import Footer from '../footer';
 

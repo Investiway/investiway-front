@@ -10,3 +10,9 @@ export function RefreshTokenUser(token: string) {
     method: 'get',
   });
 }
+export function GetUser() {
+  return request({
+    url: '/auth/access',
+    method: 'get',
+  });
+}
