@@ -37,7 +37,9 @@ const style = {
 const AddGoal = ({ isOpen, handleClose }: propsGoadInterface) => {
   const [type, setType] = useState('');
   const changeType = (event: SelectChangeEvent) => {
+    console.log(type);
     setType(event.target.value);
+    console.log(type);
   };
   return (
     <Modal
