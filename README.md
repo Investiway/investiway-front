@@ -1,5 +1,10 @@
 
-![img.png](./logo.png)
+<p align="center">
+    <a href="https://investiway.vercel.app/">
+        <img width="1046" src="logo.png" alt="">
+    </a>
+</p>
+
 # @Investiway
 ##### Personal finance management.
 ## Description
