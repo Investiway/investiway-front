@@ -1,7 +1,7 @@
 export enum PriorityType {
-  High = 'High',
-  Medium = 'Medium',
-  Low = 'Low',
+  High = 10,
+  Medium = 20,
+  Low = 30,
 }
 export enum PriorityColor {
   High = 'tw-bg-red-400',
