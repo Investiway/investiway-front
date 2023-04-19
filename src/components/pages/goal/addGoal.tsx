@@ -45,7 +45,7 @@ const AddGoal = ({ isOpen, goalEdit, handleClose, handelEdit }: propsGoadInterfa
     completeDate: dayjs(Date.now()),
     priority: 10,
     description: '',
-    amountTarget: '',
+    amountTarget: 0,
   } as Goal);
   useEffect(() => {
     setGoal((prevState) => {

@@ -46,8 +46,9 @@ const Goal = () => {
     enableModel();
   };
   const createGoalByModel = (goal: Goal) => {
+    const userId = userStore.currentUser._id;
     setIsLoading(true);
-    createGoal({ ...goal })
+    createGoal({ ...goal, amountTarget: Number(goal.amountTarget), userId })
       .then((response) => {
         const result = response.data.result;
         if (result) toast('Create goal success');
@@ -99,7 +100,7 @@ const Goal = () => {
         console.log(error);
       })
       .finally(() => {
-        // setIsLoading(false);
+        setIsLoading(false);
       });
   };
   //#endregion
@@ -204,7 +205,7 @@ const Goal = () => {
           {isLoading && (
             <LogoLoadingIcon className="tw-absolute tw-right-0 tw-bottom-0 tw-animate-spin tw-duration-1000" />
           )}
-          {goalList.map((goal, index) => goalItem(goal, index))}
+          {goalList.length && goalList?.map((goal, index) => goalItem(goal, index))}
         </div>
       </div>
     </div>
