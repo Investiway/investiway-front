@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 import { AppState } from '../../stores/store';
 //#endregion
 //#region [Import Type]
-import type { FilterGoal, Goal } from '../../utils/interfaces/goal';
+import type { FilterGoal, Goal } from '../../types/goal';
 import { PriorityColor, PriorityType } from '../../utils/enums/goal';
 import { toast } from 'react-toastify';
 //#endregion

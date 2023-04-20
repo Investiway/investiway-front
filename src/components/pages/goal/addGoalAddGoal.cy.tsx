@@ -1,6 +1,6 @@
 import React from 'react';
 import AddGoal from './addGoal';
-import { Goal } from '../../../utils/interfaces/goal';
+import { Goal } from '../../../types/goal';
 
 describe('<AddGoal />', () => {
   it('renders', () => {

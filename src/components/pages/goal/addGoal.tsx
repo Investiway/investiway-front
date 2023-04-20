@@ -17,8 +17,9 @@ import Select from '@mui/material/Select';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import type { Goal } from '../../../utils/interfaces/goal';
+import type { Goal } from '../../../types/goal';
 import dayjs from 'dayjs';
+import AutocompleteInput from '../../share/autocomplete';
 
 interface propsGoadInterface {
   isOpen: boolean;
@@ -117,6 +118,7 @@ const AddGoal = ({ isOpen, goalEdit, handleClose, handelEdit }: propsGoadInterfa
               <MenuItem value={'Travel'}>Travel</MenuItem>
             </Select>
           </FormControl>
+          <AutocompleteInput goalTypeList={[]} />
           <LocalizationProvider labelId="datetime-label" dateAdapter={AdapterDayjs}>
             <DatePicker
               value={goal.completeDate}

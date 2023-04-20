@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { User } from '../../utils/interfaces';
+import type { User } from '../../types/user';
 import request from '../../services/request';
 import { RefreshTokenUser } from '../../api/user';
 import { setLoading } from '../common';
