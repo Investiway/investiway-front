@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { Navigate } from '../../utils/types';
+import type { Navigate } from '../../types/navigate';
 interface ICommon {
   currentRoute: Navigate;
   isLoading: false | boolean;

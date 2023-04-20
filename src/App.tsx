@@ -38,7 +38,7 @@ function App() {
     GetUser()
       .then((res) => {
         if (res.data) {
-          dispatch(setUser(res.data));
+          dispatch(setUser(res.data.result));
           if (location.pathname === '/auth') navigate('/');
         }
       })
