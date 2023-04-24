@@ -14,6 +14,12 @@ export function createGoal(data: object) {
     data,
   });
 }
+export function DeleteGoal(id: string) {
+  return request({
+    url: `/goal/${id}`,
+    method: 'delete',
+  });
+}
 //#endregion
 //#region [GOAL TYPE]
 export function FetchTypeGoal(params: object) {

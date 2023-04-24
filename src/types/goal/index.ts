@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 
 export interface Goal {
+  _id: string;
   userId: string;
   name: string;
   amountTarget: number | string;
@@ -12,7 +13,7 @@ export interface Goal {
   amountMinimumPerMonth: number;
 }
 export interface FilterGoal {
-  typeId: number | undefined;
+  typeId: string;
   date: any | undefined;
   priority: string | undefined;
   search: string | undefined;

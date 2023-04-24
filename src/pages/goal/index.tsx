@@ -4,12 +4,12 @@ import Select from '@mui/material/Select';
 import { DatePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { Add, HorizontalRuleOutlined } from '@mui/icons-material';
+import { Add, Edit, HorizontalRuleOutlined } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import AddGoal from '../../components/pages/goal/addGoal';
 import { ReactComponent as LogoLoadingIcon } from '../../assets/icons/svg/logo-loading.svg';
 //#region [Import Store]
-import { createGoal, getGoal } from '../../api/goal';
+import { createGoal, DeleteGoal, FetchTypeGoal, getGoal } from '../../api/goal';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../stores/store';
 //#endregion
@@ -17,10 +17,12 @@ import { AppState } from '../../stores/store';
 import type { FilterGoal, Goal } from '../../types/goal';
 import { PriorityColor, PriorityType } from '../../utils/enums/goal';
 import { toast } from 'react-toastify';
+import { GoalTypeResponse, Response } from '../../types/response';
+import { GoalType } from '../../types/goalType';
 //#endregion
 const Goal = () => {
   const filterSchema: FilterGoal = {
-    typeId: undefined,
+    typeId: '',
     date: null,
     priority: undefined,
     search: undefined,
@@ -40,15 +42,16 @@ const Goal = () => {
     setShowModal(false);
   };
   const editGoal = (goal: Goal) => {
+    const completeDate = goal.completeDate ? dayjs(goal.completeDate) : null;
     setGoalEdit((prevState) => {
-      return { ...prevState, ...goal };
+      return { ...prevState, ...goal, completeDate };
     });
     enableModel();
   };
   const createGoalByModel = (goal: Goal) => {
     const userId = userStore.currentUser._id;
     setIsLoading(true);
-    createGoal({ ...goal, amountTarget: Number(goal.amountTarget), userId })
+    createGoal({ ...goal, amountTarget: Number(goal.amountTarget), userId, _id: undefined })
       .then((response) => {
         const result = response.data.result;
         if (result) {
@@ -66,6 +69,7 @@ const Goal = () => {
   //#endregion
   //#region [Filter]
   const [filter, setFilter] = useState(filterSchema);
+  const [typeGoalList, setTypeGoalList] = useState([] as GoalType[]);
   const keywordChange = (value: string) => {
     setFilter((prevState) => {
       return {
@@ -74,7 +78,7 @@ const Goal = () => {
       };
     });
   };
-  const changeType = (value: number) => {
+  const changeType = (value: string) => {
     setFilter((prevState) => {
       return {
         ...prevState,
@@ -90,12 +94,24 @@ const Goal = () => {
       };
     });
   };
+  const getTypeGoal = () => {
+    const userId = userStore.currentUser._id;
+    FetchTypeGoal({ userId })
+      .then((response: Response) => {
+        const result = response.data?.result as GoalTypeResponse;
+        setTypeGoalList(result.data as GoalType[]);
+      })
+      .catch((e) => {
+        toast(e);
+      })
+      .finally();
+  };
   //#endregion
   //#region [Get Goal]
   const getGoalUser = () => {
     const userId = userStore.currentUser._id;
     setIsLoading(true);
-    getGoal({ userId, ...filter })
+    getGoal({ userId, ...filter, date: dayjs(filter.date).format('DD/MM/YYYY') })
       .then((response) => {
         setGoalList(response.data.result.data);
       })
@@ -107,9 +123,21 @@ const Goal = () => {
       });
   };
   //#endregion
+  const onDeleteGoal = (id: string) => {
+    DeleteGoal(id)
+      .then((response: Response) => {
+        const result = response.data?.result;
+        if (result) {
+          toast('Delete goal success');
+          getGoalUser();
+        }
+      })
+      .catch((e) => toast(e));
+  };
   //#region [Hook]
   useEffect(() => {
     getGoalUser();
+    getTypeGoal();
   }, [filter.typeId]);
   //#endregion
   const getColorBadge = (priority: number) => {
@@ -127,10 +155,12 @@ const Goal = () => {
           tw-cursor-pointer
           tw-min-w-[280px] tw-min-h-[260px]
           hover:tw-shadow-gray-900"
-        onClick={() => editGoal(item)}
       >
-        <Button className="!tw-absolute tw-right-0">
+        <Button className="!tw-absolute tw-right-0" onClick={() => onDeleteGoal(item._id)}>
           <HorizontalRuleOutlined className="tw-text-white" />
+        </Button>
+        <Button className="!tw-absolute tw-right-14" onClick={() => editGoal(item)}>
+          <Edit className="tw-text-white" />
         </Button>
         <div
           className={`tw-h-4 tw-w-1/2 tw-rounded-br-2xl tw-rounded-tl-xl tw-bg-opacity-70 tw-backdrop-blur-2xl ${getColorBadge(
@@ -162,11 +192,17 @@ const Goal = () => {
                 className="tw-w-40"
                 value={filter.typeId}
                 label="Type"
-                onChange={(event) => changeType(Number(event.target.value))}
+                onChange={(event) => changeType(event.target.value)}
               >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                {typeGoalList?.length &&
+                  typeGoalList?.map((e: GoalType, index: number) => (
+                    <MenuItem key={index} value={e._id}>
+                      {e.name}
+                    </MenuItem>
+                  ))}
               </Select>
             </div>
             <div className="tw-w-80">
@@ -181,10 +217,13 @@ const Goal = () => {
                 onChange={(event) => keywordChange(event.target.value)}
                 fullWidth={true}
                 placeholder="Type keyword..."
+                onKeyPress={(event) => {
+                  event.key === 'Enter' && getGoalUser();
+                }}
               />
               <Button
                 onClick={() => {
-                  filter.search && getGoalUser();
+                  getGoalUser();
                 }}
               >
                 Search
