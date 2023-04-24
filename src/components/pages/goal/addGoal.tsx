@@ -66,6 +66,7 @@ const AddGoal = ({ isOpen, goalEdit, handleClose, handelEdit }: propsGoadInterfa
       .finally();
   };
   const onGoalTypeChange = (goalTypeId: string, needReload: boolean) => {
+    console.log(goalTypeId);
     setStateByKey('typeId', goalTypeId);
     if (needReload) {
       getTypeGoal();

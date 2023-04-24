@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState, useEffect } from 'react';
+import React, { SyntheticEvent, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import { useSelector } from 'react-redux';
@@ -17,24 +17,19 @@ const AutocompleteInput = ({ list, onChange, onDelete, call }: AutocompleteProps
   const filter = createFilterOptions<any>();
   const [state, setState] = useState({} as any);
   const userId = useSelector((state: AppState) => state.user.currentUser._id);
-  useEffect(() => {
-    console.log(list);
-    console.log(state);
-  }, [list]);
 
   const onChangeItem = (valueOption: any) => {
-    if (typeof valueOption === 'string') {
+    if (!valueOption?.value?.name) {
       setState(valueOption);
-      onChange(valueOption);
+      onChange(valueOption._id);
     } else {
-      valueOption?.value?.name &&
-        call({ userId, ...valueOption?.value, _id: undefined }).then((response: Response) => {
-          const result = response.data?.result as GoalType;
-          if (result) {
-            onChange(result._id, true);
-            setState(result._id);
-          }
-        });
+      call({ userId, ...valueOption?.value, _id: undefined }).then((response: Response) => {
+        const result = response.data?.result as GoalType;
+        if (result) {
+          onChange(result._id, true);
+          setState(result._id);
+        }
+      });
     }
   };
   const onDeleteItem = (id: string) => {
