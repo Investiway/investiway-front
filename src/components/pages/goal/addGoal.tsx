@@ -9,16 +9,20 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
-  InputLabel,
-  MenuItem,
   TextareaAutosize,
 } from '@mui/material';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import type { Goal } from '../../../utils/interfaces/goal';
+import type { Goal } from '../../../types/goal';
+import type { GoalType } from '../../../types/goalType';
 import dayjs from 'dayjs';
+import AutocompleteInput from '../../share/autocomplete';
+import { FetchTypeGoal, CreateGoalType, DeleteGoalType } from '../../../api/goal';
+import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../../stores/store';
+import { GoalTypeResponse, Response } from '../../../types/response';
 
 interface propsGoadInterface {
   isOpen: boolean;
@@ -38,18 +42,47 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-const AddGoal = ({ isOpen, goalEdit, handleClose }: propsGoadInterface) => {
-  const [type, setType] = useState('');
+const AddGoal = ({ isOpen, goalEdit, handleClose, handelEdit }: propsGoadInterface) => {
   const [goal, setGoal] = useState({
-    title: '',
-    type: 'Shopping',
-    date: dayjs(Date.now()),
-    priority: 'High',
+    name: '',
+    typeId: '',
+    completeDate: dayjs(Date.now()),
+    priority: 10,
     description: '',
-    savingGoal: '',
+    amountTarget: 0,
   } as Goal);
-  // console.log(goal);
+  const userStore = useSelector((state: AppState) => state.user);
+  const [typeGoalList, setTypeGoalList] = useState([] as GoalType[]);
+  const getTypeGoal = () => {
+    const userId = userStore.currentUser._id;
+    FetchTypeGoal({ userId })
+      .then((response: Response) => {
+        const result = response.data?.result as GoalTypeResponse;
+        setTypeGoalList(result.data as GoalType[]);
+      })
+      .catch((e) => {
+        toast(e);
+      })
+      .finally();
+  };
+  const onGoalTypeChange = (goalTypeId: string, needReload: boolean) => {
+    console.log(goalTypeId);
+    setStateByKey('typeId', goalTypeId);
+    if (needReload) {
+      getTypeGoal();
+    }
+  };
+  const onDeleteGoalType = (goalTypeId: string) => {
+    DeleteGoalType(goalTypeId).then((response: Response) => {
+      if (response.data?.result) {
+        toast('Delete goal type success');
+        if (goalTypeId === goal.typeId) setStateByKey('typeId', '');
+        getTypeGoal();
+      }
+    });
+  };
   useEffect(() => {
+    getTypeGoal();
     setGoal((prevState) => {
       return {
         ...prevState,
@@ -57,16 +90,16 @@ const AddGoal = ({ isOpen, goalEdit, handleClose }: propsGoadInterface) => {
       };
     });
   }, [isOpen]);
-  const changeType = (event: SelectChangeEvent) => {
-    setType(event.target.value);
-  };
-  const changeDate = (value: any) => {
+  const setStateByKey = (key: string, value: any) => {
     setGoal((prevState) => {
       return {
         ...prevState,
-        date: value,
+        [key]: value,
       };
     });
+  };
+  const createNewGoal = () => {
+    handelEdit(goal);
   };
   return (
     <Modal
@@ -77,8 +110,16 @@ const AddGoal = ({ isOpen, goalEdit, handleClose }: propsGoadInterface) => {
     >
       <Box sx={{ ...style, width: 600 }} className="tw-flex tw-flex-col tw-space-y-4">
         <h2 className="tw-text-xl tw-text-gray-300 tw-font-bold">Create goal</h2>
-        <TextField value={goal.title} placeholder="Goal name" />
-        <TextField value={goal.savingGoal} placeholder="Saving goal" />
+        <TextField
+          value={goal.name}
+          onChange={(event) => setStateByKey('name', event.target.value)}
+          placeholder="Goal name"
+        />
+        <TextField
+          value={goal.amountTarget}
+          onChange={(event) => setStateByKey('amountTarget', event.target.value)}
+          placeholder="Saving goal"
+        />
         <FormControl>
           <FormLabel>Priority</FormLabel>
           <RadioGroup
@@ -87,36 +128,29 @@ const AddGoal = ({ isOpen, goalEdit, handleClose }: propsGoadInterface) => {
             defaultValue="High"
             name="radio-buttons-group"
             className="tw-flex !tw-flex-row tw-space-x-4 tw-text-gray-300"
+            onChange={(event) => setStateByKey('priority', Number(event.target.value))}
           >
-            <FormControlLabel value="High" control={<Radio />} label="High" />
-            <FormControlLabel value="Medium" control={<Radio />} label="Medium" />
-            <FormControlLabel value="Low" control={<Radio />} label="Low" />
+            <FormControlLabel value="10" control={<Radio />} label="High" />
+            <FormControlLabel value="20" control={<Radio />} label="Medium" />
+            <FormControlLabel value="30" control={<Radio />} label="Low" />
           </RadioGroup>
         </FormControl>
         <div className="tw-flex tw-space-x-4">
-          <FormControl className="tw-flex-1">
-            <InputLabel id="type-select-label-create">Select type</InputLabel>
-            <Select
-              labelId="type-select-label-create"
-              id="select-label-create"
-              className="tw-w-full"
-              value={goal.type}
-              defaultValue={goal.type}
-              label="Select type"
-              onChange={changeType}
-            >
-              <MenuItem value={'Shopping'}>Ten</MenuItem>
-              <MenuItem value={'20'}>Twenty</MenuItem>
-              <MenuItem value={'30'}>Thirty</MenuItem>
-            </Select>
-          </FormControl>
+          <div className="tw-flex-1">
+            <AutocompleteInput
+              list={typeGoalList}
+              call={CreateGoalType}
+              onDelete={onDeleteGoalType}
+              onChange={onGoalTypeChange}
+            />
+          </div>
           <LocalizationProvider labelId="datetime-label" dateAdapter={AdapterDayjs}>
             <DatePicker
-              value={goal.date}
+              value={goal.completeDate}
               label="Date goal"
-              defaultValue={goal.date}
+              defaultValue={goal.completeDate}
               className="tw-flex-1"
-              onChange={(value: any) => changeDate(value)}
+              onChange={(value) => setStateByKey('completeDate', value)}
             />
           </LocalizationProvider>
         </div>
@@ -125,12 +159,13 @@ const AddGoal = ({ isOpen, goalEdit, handleClose }: propsGoadInterface) => {
           placeholder="Description..."
           minRows={4}
           className="tw-bg-transparent tw-rounded-lg tw-p-4 tw-text-gray-300 tw-border tw-border-gray-300"
+          onChange={(event) => setStateByKey('description', event.target.value)}
         />
         <Box className="tw-space-x-4 tw-text-right">
           <Button onClick={() => handleClose()} className="">
             Cancel
           </Button>
-          <Button variant="contained" onClick={() => handleClose()} className="">
+          <Button variant="contained" onClick={() => createNewGoal()} className="">
             Save
           </Button>
         </Box>

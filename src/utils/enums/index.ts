@@ -1,4 +1,4 @@
-import type { Navigate } from '../types';
+import type { Navigate } from '../../types/navigate';
 
 export const Navigation: Navigate[] = [
   {
